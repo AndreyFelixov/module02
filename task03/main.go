@@ -2,23 +2,15 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func main() {
-	var R *float64
-	var P float64
-	P = 35
-	var r float64
-
-	R = &r
-
-	r = P / 2 * math.Pi
-	fmt.Printf("%.2f \n", *R)
-
-	var S float64
-
-	S = math.Pi * (math.Pow(*R, 2))
-	fmt.Printf("%.2f \n", S)
+	Week := make([]string, 7)
+	Week = []string{"Pon", "Vt", "Sr", "Cht", "Pt", "Sb", "Vs"}
+	workDays := make([]string, 5)
+	copy(workDays, Week)
+	Week = Week[5:]
+	fmt.Println(Week)
+	fmt.Println(workDays)
 
 }
