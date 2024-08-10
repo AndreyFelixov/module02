@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-	"strings"
 )
 
 func main() {
@@ -17,22 +16,22 @@ func main() {
 			"Books":      {"2"},
 			"Pereodical": {"4"},
 		},
-		// "Reader3": {
-		// 	"Books":      {"4"},
-		// 	"Pereodical": {"22"},
-		// },
-		// "Reader4": {
-		// 	"Books":      {"0"},
-		// 	"Pereodical": {"22"},
-		// },
-		// "Reader5": {
-		// 	"Books":      {"22"},
-		// 	"Pereodical": {"0"},
-		// },
-		// "Reader6": {
-		// 	"Books":      {"0"},
-		// 	"Pereodical": {"0"},
-		// },
+		"Reader3": {
+			"Books":      {"4"},
+			"Pereodical": {"22"},
+			// },
+			// "Reader4": {
+			// 	"Books":      {"0"},
+			// 	"Pereodical": {"22"},
+			// },
+			// "Reader5": {
+			// 	"Books":      {"22"},
+			// 	"Pereodical": {"0"},
+			// },
+			// "Reader6": {
+			// 	"Books":      {"0"},
+			// 	"Pereodical": {"0"},
+		},
 	}
 
 	keys := make([]string, 0, len(items))
@@ -41,25 +40,25 @@ func main() {
 	}
 	sort.Strings(keys)
 
-	var f *int
-	var ff int
-	f = &ff
+	// var f *int
+	// var ff int
+	// f = &ff
 
-	for _, i := range keys {
-		if strings.Join(items[i]["Books"], " ") != "0" || strings.Join(items[i]["Pereodical"], " ") != "0" {
-			ff++
+	// for _, i := range keys {
+	// 	if strings.Join(items[i]["Books"], " ") != "0" || strings.Join(items[i]["Pereodical"], " ") != "0" {
+	// 		ff++
 
-		}
+	// 	}
 
-	}
-	fmt.Println(*f)
+	// }
+	// fmt.Println(*f)
 
 	v := make([]int, 0, len(items)*2)
 
 	for _, i := range keys {
 		for m := range items[i] {
 			for p := range items[i][m] {
-				//fmt.Println(items[i][m][p])
+
 				c, _ := strconv.Atoi(items[i][m][p])
 				v = append(v, c)
 
@@ -72,7 +71,8 @@ func main() {
 	vv := make([]int, len(items))
 	for k := 0; k < len(items); k++ {
 
-		vv[k] = sum(v)
+		vv = append(vv, Sum(v))
+		//fmt.Println(vv[k])
 	}
 	fmt.Println(vv)
 	for i := 0; i < len(items); i++ {
@@ -83,7 +83,7 @@ func main() {
 
 }
 
-func sum(v []int) int {
+func Sum(v []int) int {
 	var sss int
 	for z := 0; z < len(v); z++ {
 
