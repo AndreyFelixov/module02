@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -19,18 +20,18 @@ func main() {
 		"Reader3": {
 			"Books":      {"4"},
 			"Pereodical": {"22"},
-			// },
-			// "Reader4": {
-			// 	"Books":      {"0"},
-			// 	"Pereodical": {"22"},
-			// },
-			// "Reader5": {
-			// 	"Books":      {"22"},
-			// 	"Pereodical": {"0"},
-			// },
-			// "Reader6": {
-			// 	"Books":      {"0"},
-			// 	"Pereodical": {"0"},
+		},
+		"Reader4": {
+			"Books":      {"0"},
+			"Pereodical": {"22"},
+		},
+		"Reader5": {
+			"Books":      {"22"},
+			"Pereodical": {"0"},
+		},
+		"Reader6": {
+			"Books":      {"0"},
+			"Pereodical": {"0"},
 		},
 	}
 
@@ -40,18 +41,18 @@ func main() {
 	}
 	sort.Strings(keys)
 
-	// var f *int
-	// var ff int
-	// f = &ff
+	var f *int
+	var ff int
+	f = &ff
 
-	// for _, i := range keys {
-	// 	if strings.Join(items[i]["Books"], " ") != "0" || strings.Join(items[i]["Pereodical"], " ") != "0" {
-	// 		ff++
+	for _, i := range keys {
+		if strings.Join(items[i]["Books"], " ") != "0" || strings.Join(items[i]["Pereodical"], " ") != "0" {
+			ff++
 
-	// 	}
+		}
 
-	// }
-	// fmt.Println(*f)
+	}
+	fmt.Println(*f)
 
 	v := make([]int, 0, len(items)*2)
 
@@ -67,11 +68,17 @@ func main() {
 		}
 
 	}
-	//fmt.Print(v)
+	fmt.Print(v)
 	vv := make([]int, len(items))
+	m := 1
+	p := 0
+
 	for k := 0; k < len(items); k++ {
 
-		vv = append(vv, Sum(v))
+		vv[k] = v[p] + v[m]
+		p = p + 2
+		m = p + 1
+
 		//fmt.Println(vv[k])
 	}
 	fmt.Println(vv)
@@ -80,17 +87,5 @@ func main() {
 		fmt.Printf("У %s на руках %v книг \n", keys[i], vv[i])
 
 	}
-
-}
-
-func Sum(v []int) int {
-	var sss int
-	for z := 0; z < len(v); z++ {
-
-		sss = v[z] + v[z+1]
-		z++
-
-	}
-	return sss
 
 }
