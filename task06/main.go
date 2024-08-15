@@ -17,10 +17,8 @@ func main() {
 	getFile(p)
 
 	logTime := func() float64 {
-		//t1 :=
 		return time.Since(t).Seconds()
 	}
-	//fmt.Printf("Время выполнения программы:%v\n", logTime)
 
 	fmt.Printf("Время выполнения программы:%v\n", logTime())
 
