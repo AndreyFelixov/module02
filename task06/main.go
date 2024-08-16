@@ -6,7 +6,6 @@ import (
 	"os"
 	"strconv"
 	"time"
-	"unsafe"
 )
 
 func main() {
@@ -19,6 +18,7 @@ func main() {
 	logTime := func() float64 {
 		return time.Since(t).Seconds()
 	}
+	byteCount()
 
 	fmt.Printf("Время выполнения программы:%v\n", logTime())
 
@@ -40,7 +40,6 @@ func getFile(path string) {
 	}
 	defer func() {
 		fmt.Printf("Выведено строк: %v\n", i-1)
-		fmt.Printf("Использовано байт:%v\n", unsafe.Sizeof(sls))
 		file.Close()
 	}()
 
@@ -57,6 +56,20 @@ func getFile(path string) {
 		writer.WriteString(sl)
 		writer.WriteString("\n")
 		i += 1
+
 	}
 	writer.Flush()
+}
+
+func byteCount() {
+	var counter int
+	file, _ := os.Open("data/out.txt")
+	s := bufio.NewScanner(file)
+	for s.Scan() {
+
+		counter += len(s.Text())
+
+	}
+	fmt.Printf("Использовано байт: %v\n", counter)
+
 }
