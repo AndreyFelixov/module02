@@ -8,6 +8,9 @@ import (
 	"time"
 )
 
+var i int = 1
+var b string
+
 func main() {
 
 	t := time.Now()
@@ -18,14 +21,15 @@ func main() {
 	logTime := func() float64 {
 		return time.Since(t).Seconds()
 	}
-	byteCount()
 
+	fmt.Printf("Использовано байт: %v\n", byteCount())
+	fmt.Printf("Выведено строк: %v\n", i-1)
 	fmt.Printf("Время выполнения программы:%v\n", logTime())
 
 }
 
 func getFile(path string) {
-	i := 1
+
 	sls := make([]string, 0, 100)
 	f, _ := os.Open(path)
 	defer f.Close()
@@ -39,7 +43,7 @@ func getFile(path string) {
 		os.Exit(1)
 	}
 	defer func() {
-		fmt.Printf("Выведено строк: %v\n", i-1)
+
 		file.Close()
 	}()
 
@@ -48,20 +52,20 @@ func getFile(path string) {
 		sls = append(sls, s.Text())
 
 	}
+
 	for _, sl := range sls {
 
-		b := strconv.Itoa(i)
-		writer.WriteString(b)
+		writer.WriteString(stringCount())
 		writer.WriteString(".")
 		writer.WriteString(sl)
 		writer.WriteString("\n")
-		i += 1
 
 	}
 	writer.Flush()
+
 }
 
-func byteCount() {
+func byteCount() int {
 	var counter int
 	file, _ := os.Open("data/out.txt")
 	s := bufio.NewScanner(file)
@@ -70,6 +74,11 @@ func byteCount() {
 		counter += len(s.Text())
 
 	}
-	fmt.Printf("Использовано байт: %v\n", counter)
+	return counter
 
+}
+func stringCount() string {
+	b = strconv.Itoa(i)
+	i += 1
+	return b
 }
