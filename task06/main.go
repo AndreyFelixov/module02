@@ -42,11 +42,7 @@ func getFile(path string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	defer func() {
-
-		file.Close()
-	}()
-
+	defer file.Close()
 	for s.Scan() {
 
 		sls = append(sls, s.Text())
@@ -62,9 +58,7 @@ func getFile(path string) {
 
 	}
 	writer.Flush()
-
 }
-
 func byteCount() int {
 	var counter int
 	file, _ := os.Open("data/out.txt")
