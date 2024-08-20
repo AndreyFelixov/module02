@@ -20,8 +20,6 @@ type Row struct {
 func main() {
 	path := "data/07_task_in.txt"
 	getFile(path)
-	fmt.Println("zaebalo")
-
 }
 
 func getFile(path string) {
@@ -29,13 +27,11 @@ func getFile(path string) {
 	rowsFile, _ := os.ReadFile(path)
 	rowLines := strings.Split(string(rowsFile), "\n")
 	for i := 0; i < len(rowLines); i++ {
-		if rowLines[i] != "" {
-			rowLine := strings.Split(string(rowLines[i]), "|")
-			newRow := Row{Name: rowLine[0], Address: rowLine[1], City: rowLine[2]}
-			rows = append(rows, newRow)
-		} else {
-			panic("parse error: empty field on string")
-		}
+
+		rowLine := strings.Split(string(rowLines[i]), "|")
+		newRow := Row{Name: rowLine[0], Address: rowLine[1], City: rowLine[2]}
+		rows = append(rows, newRow)
+
 	}
 
 	file, _ := os.Create("data/out.txt")
@@ -50,7 +46,7 @@ func getFile(path string) {
 			writer.WriteString(roww.Address)
 			writer.WriteString("\n")
 			writer.WriteString(roww.City)
-			writer.WriteString("\n\n\n")
+			writer.WriteString("\n\n\n\n")
 		} else {
 
 			writer.Flush()
