@@ -14,6 +14,8 @@ type Row struct {
 	City    string
 }
 
+var pntr *int
+
 func main() {
 	path := "data/in.txt"
 	path1 := "data/out.txt"
@@ -40,9 +42,25 @@ func getFile(path, path1 string) {
 		} else {
 			outFile, _ := os.ReadFile(path1)
 			fmt.Print(string(outFile))
-			fmt.Printf("parse error:empty field on string %d\n", i)
-			panic("")
+			pntr = &i
 		}
 		writer.Flush()
 	}
+	err := someFunc()
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+func someFunc() (err error) {
+	defer func() {
+		if panicErr := recover(); panicErr != nil {
+			switch panicErr {
+			case "parse error":
+				err = fmt.Errorf("parse error: empty field in %dth user", *pntr+1)
+			default:
+				panic("critical")
+			}
+		}
+	}()
+	panic("parse error")
 }
