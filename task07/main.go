@@ -17,7 +17,7 @@ type Row struct {
 var pntr *int
 
 func main() {
-	path := "data/in.txt"
+	path := "data/in777.txt"
 	path1 := "data/out.txt"
 	getFile(path, path1)
 }
@@ -27,6 +27,7 @@ func getFile(path, path1 string) {
 	writer := bufio.NewWriter(file)
 	defer file.Close()
 	rowLines := strings.Split(string(rowsFile), "\n")
+	fmt.Print(len(rowLines))
 	for i := 0; i < len(rowLines); i++ {
 		rowLine := strings.Split(string(rowLines[i]), "|")
 		newRow := Row{Name: rowLine[0], Address: rowLine[1], City: rowLine[2]}
@@ -38,7 +39,7 @@ func getFile(path, path1 string) {
 			writer.WriteString(newRow.Address)
 			writer.WriteString("\n")
 			writer.WriteString(newRow.City)
-			writer.WriteString("\n\n\n\n")
+			writer.WriteString("\n\n\n")
 		} else {
 			outFile, _ := os.ReadFile(path1)
 			fmt.Print(string(outFile))
