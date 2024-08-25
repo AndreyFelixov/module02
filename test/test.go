@@ -37,14 +37,14 @@ func getFile(pathIn, pathOut string) {
 		writeAndPrint(pathOut)
 	} else {
 		writeAndPrint(pathOut)
-		err := someFunc()
+		err := panicFunc()
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
 }
 
-func someFunc() (err error) {
+func panicFunc() (err error) {
 	defer func() {
 		if panicErr := recover(); panicErr != nil {
 			switch panicErr {
@@ -75,8 +75,8 @@ func writeAndPrint(pathOut string) {
 	w.Flush()
 	fileOut, _ = os.Open(pathOut)
 	defer fileOut.Close()
-	s1 := bufio.NewScanner(fileOut)
-	for s1.Scan() {
-		fmt.Println(s1.Text())
+	s := bufio.NewScanner(fileOut)
+	for s.Scan() {
+		fmt.Println(s.Text())
 	}
 }
