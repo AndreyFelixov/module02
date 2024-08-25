@@ -12,7 +12,7 @@ var rows = make([]string, 0)
 var pntr *int
 
 func main() {
-	pathIn := "D:/projects/module02/task07/data/in.txt"
+	pathIn := "D:/projects/module02/task07/data/in777.txt"
 	pathOut := "D:/projects/module02/task07/data/out.txt"
 	getFile(pathIn, pathOut)
 }
@@ -34,21 +34,27 @@ func getFile(pathIn, pathOut string) {
 	}
 	fileIn.Close()
 	if !flag {
-		writeAndPrint(pathOut)
+		writeToFile(pathOut)
 	} else {
-		writeAndPrint(pathOut)
-		err := panicFunc()
+		writeToFile(pathOut)
+		err := panicFunc(pathOut)
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
 }
 
-func panicFunc() (err error) {
+func panicFunc(pathOut string) (err error) {
 	defer func() {
 		if panicErr := recover(); panicErr != nil {
 			switch panicErr {
 			case "parse error":
+				fileOut, _ := os.Open(pathOut)
+				defer fileOut.Close()
+				s := bufio.NewScanner(fileOut)
+				for s.Scan() {
+					fmt.Println(s.Text())
+				}
 				err = fmt.Errorf("parse error: empty field in %dth string", *pntr)
 			default:
 				panic("critical")
@@ -58,7 +64,7 @@ func panicFunc() (err error) {
 	panic("parse error")
 }
 
-func writeAndPrint(pathOut string) {
+func writeToFile(pathOut string) {
 	fileOut, _ := os.Create(pathOut)
 	w := bufio.NewWriter(fileOut)
 	for i := 0; i < len(rows); i++ {
@@ -73,10 +79,4 @@ func writeAndPrint(pathOut string) {
 		w.WriteString("\n\n\n")
 	}
 	w.Flush()
-	fileOut, _ = os.Open(pathOut)
-	defer fileOut.Close()
-	s := bufio.NewScanner(fileOut)
-	for s.Scan() {
-		fmt.Println(s.Text())
-	}
 }
