@@ -12,8 +12,8 @@ var rows = make([]string, 0)
 var pntr *int
 
 func main() {
-	pathIn := "D:/projects/module02/task07/data/in777.txt"
-	pathOut := "D:/projects/module02/task07/data/out.txt"
+	pathIn := "data/in.txt"
+	pathOut := "data/out.txt"
 	getFile(pathIn, pathOut)
 }
 
