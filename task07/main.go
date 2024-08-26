@@ -8,16 +8,17 @@ import (
 	"strings"
 )
 
-var rows = make([]string, 0)
 var pntr *int
 
 func main() {
 	pathIn := "data/in.txt"
 	pathOut := "data/out.txt"
 	getFile(pathIn, pathOut)
+	writeToFile(pathOut, rows)
 }
 
 func getFile(pathIn, pathOut string) {
+	rows := make([]string, 0)
 	flag := false
 	fileIn, _ := os.Open(pathIn)
 	s := bufio.NewScanner(fileIn)
@@ -34,9 +35,9 @@ func getFile(pathIn, pathOut string) {
 	}
 	fileIn.Close()
 	if !flag {
-		writeToFile(pathOut)
+		writeToFile(pathOut, rows)
 	} else {
-		writeToFile(pathOut)
+		writeToFile(pathOut, rows)
 		err := panicFunc(pathOut)
 		if err != nil {
 			fmt.Println(err)
@@ -64,10 +65,11 @@ func panicFunc(pathOut string) (err error) {
 	panic("parse error")
 }
 
-func writeToFile(pathOut string) {
+func writeToFile(pathOut string, rows []string) {
 	fileOut, _ := os.Create(pathOut)
 	w := bufio.NewWriter(fileOut)
-	for i := 0; i < len(rows); i++ {
+	// for i := 0; i < len(rows); i++ {
+	for i := range rows {
 		rowLine := strings.Split(rows[i], "|")
 		w.WriteString(strconv.Itoa(i + 1))
 		w.WriteString("\n")
