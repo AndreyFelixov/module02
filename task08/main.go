@@ -7,22 +7,35 @@ import (
 	"os"
 )
 
+var countStr int
+
 func main() {
 	pathIn := "data/in.txt"
-	getFile(pathIn)
+	c, _ := getFile(pathIn)
+	fmt.Print("Total strings:", c)
+
 }
 
-func getFile(pathIn string) {
+func getFile(pathIn string) (int, error) {
+	//flags := log.LstdFlags | log.Lshortfile
+	logInfo := log.New(os.Stdout, "INFO:\t", log.Lshortfile)
 	fileIn, err := os.Open(pathIn)
-	if err != nil {
-		log.Println("Can't open file: wrong path")
-	}
-	s := bufio.NewScanner(fileIn)
-	var countStr int
-	for s.Scan() {
-		countStr += 1
-	}
-	fmt.Printf("Total strings: %d\n", countStr)
-	defer fileIn.Close()
 
+	if err != nil {
+		log.Fatalln("Unable to open file")
+	}
+
+	s := bufio.NewScanner(fileIn)
+	var character rune
+	character = s.Scan()
+
+	// for s.Scan() {
+	// 	if s.Text() == "" {
+	// 		logInfo.Println("EOF")
+	// 	} else {
+	// 		countStr += 1
+	// 	}
+	// }
+
+	return countStr, s.Err()
 }
