@@ -3,39 +3,45 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
 
-var countStr int
-
 func main() {
 	pathIn := "data/in.txt"
 	c, _ := getFile(pathIn)
-	fmt.Print("Total strings:", c)
+	fmt.Print("Total strings: ", c)
 
 }
 
 func getFile(pathIn string) (int, error) {
-	//flags := log.LstdFlags | log.Lshortfile
 	logInfo := log.New(os.Stdout, "INFO:\t", log.Lshortfile)
 	fileIn, err := os.Open(pathIn)
+	var countStr int
+	defer func() {
+		fileIn.Close()
+	}()
 
 	if err != nil {
 		log.Fatalln("Unable to open file")
 	}
 
-	s := bufio.NewScanner(fileIn)
-	var character rune
-	character = s.Scan()
+	r := bufio.NewReader(fileIn)
 
-	// for s.Scan() {
-	// 	if s.Text() == "" {
-	// 		logInfo.Println("EOF")
-	// 	} else {
-	// 		countStr += 1
-	// 	}
-	// }
+	for {
+		_, err = r.ReadString('\n')
+		countStr += 1
+		if err != nil {
+			break
+		}
+	}
+	if err != io.EOF {
 
-	return countStr, s.Err()
+		return 0, err
+	} else {
+		logInfo.Println("eof")
+	}
+
+	return countStr, err
 }
