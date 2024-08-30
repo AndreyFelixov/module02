@@ -20,15 +20,17 @@ func getFile(pathIn string) (int, error) {
 	fileIn, err := os.Open(pathIn)
 	var countStr int
 	defer func() {
-		fileIn.Close()
+		if fileIn != nil {
+			fileIn.Close()
+		} else {
+			log.Fatalln("File doesn't exist")
+		}
 	}()
 
 	if err != nil {
 		log.Fatalln("Unable to open file")
 	}
-
 	r := bufio.NewReader(fileIn)
-
 	for {
 		_, err = r.ReadString('\n')
 		countStr += 1
